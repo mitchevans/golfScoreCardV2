@@ -114,6 +114,7 @@ const UICtrl = (function(){
     playerNameInput: '#player-name-input',
     doneBtn: '.done-btn',
     courseInput: '#course-name-input',
+    backCourseBtn: '.back-course-btn',
     headerTitle: '#header-title',
     courseBanner: '.course-banner',
     startBtn: '.start-game-btn',
@@ -200,7 +201,10 @@ const UICtrl = (function(){
       document.querySelector(UISelectors.playerNameInput).value = '';
     },
     removePlayer: function(){
+      let players = PlayerCtrl.getPlayers();
+      if (players.length > 0){
       document.querySelector(UISelectors.playerList).lastElementChild.remove();
+      }
     },
     getCourseInput: function(){
       return{
@@ -278,6 +282,9 @@ const App = (function(UICtrl){
     // Start Game Button
     document.querySelector(UISelectors.startBtn).addEventListener('click', startBtnClick);
 
+    // Back button Course Entry
+    document.querySelector(UISelectors.backCourseBtn).addEventListener('click', backButtonCourseClick);
+
     // Left arrow click
     document.querySelector(UISelectors.playerList).addEventListener('click', leftArrowClick);
   
@@ -310,11 +317,11 @@ const App = (function(UICtrl){
   }
 
   const backPlayerButtonClick = function(e){
-    // remove player from data
-    const players = PlayerCtrl.removePlayer();
     // remove player from ui
     UICtrl.removePlayer();
-
+    // remove player from data
+    PlayerCtrl.removePlayer();
+    
     e.preventDefault();
   }
 
@@ -328,6 +335,11 @@ const App = (function(UICtrl){
     const courseName = UICtrl.getCourseInput();
 
     document.querySelector(UISelectors.courseBanner).innerHTML = courseName.course;
+    e.preventDefault();
+  }
+
+  const backButtonCourseClick = function(e){
+    UICtrl.showPlayerState();
     e.preventDefault();
   }
 
