@@ -46,6 +46,9 @@ const PlayerCtrl = (function(){
 
       return newPlayer
     },
+    removePlayer: function(){
+      data.players.pop();
+    },
     pushNewScores: function(newScoresArr){
       for(i=0; i < data.players.length; i++){
         data.players[i].scores.push(newScoresArr[i])
@@ -88,10 +91,8 @@ const PlayerCtrl = (function(){
     removeLastHole: function(){
       let holes = data.holes;
       holes.pop();
-      console.log("holes: " + holes);
       let parArr = data.parArr;
       parArr.pop();
-      console.log('par array: '+ parArr);
       let players = data.players;
       players.forEach(function(player){
         player.scores.pop();
@@ -109,6 +110,7 @@ const UICtrl = (function(){
     gameState: '.game-state',
     gameStateData: '.game-state-data',
     addPlayerBtn: '.add-player-btn',
+    backPlayerBtn: '.back-player-btn',
     playerNameInput: '#player-name-input',
     doneBtn: '.done-btn',
     courseInput: '#course-name-input',
@@ -197,6 +199,9 @@ const UICtrl = (function(){
     clearNameInput: function(){
       document.querySelector(UISelectors.playerNameInput).value = '';
     },
+    removePlayer: function(){
+      document.querySelector(UISelectors.playerList).lastElementChild.remove();
+    },
     getCourseInput: function(){
       return{
         course: document.querySelector(UISelectors.courseInput).value}
@@ -264,6 +269,9 @@ const App = (function(UICtrl){
     // Add player button
     document.querySelector(UISelectors.addPlayerBtn).addEventListener('click', addPlayerBtnSubmit);
 
+    // Back player button
+    document.querySelector(UISelectors.backPlayerBtn).addEventListener('click', backPlayerButtonClick);
+
     // Done with player entry
     document.querySelector(UISelectors.doneBtn).addEventListener('click', doneBtnClick);
 
@@ -298,6 +306,15 @@ const App = (function(UICtrl){
       UICtrl.clearNameInput();
     }
    
+    e.preventDefault();
+  }
+
+  const backPlayerButtonClick = function(e){
+    // remove player from data
+    const players = PlayerCtrl.removePlayer();
+    // remove player from ui
+    UICtrl.removePlayer();
+
     e.preventDefault();
   }
 
