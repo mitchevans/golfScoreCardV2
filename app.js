@@ -133,11 +133,11 @@ const UICtrl = (function(){
       let holes = '';
       let pars = '';
       holesArr.forEach(function(hole){
-        holes +=  ` ${hole} |`
+        holes +=  `<div class="nonScoreSquare">${hole}</div>`
       });
 
       parsArr.forEach(function(par){
-        pars +=  ` ${par} |`
+        pars +=  `<div class="nonScoreSquare">${par}</div>`
       });
 
       players.forEach(function(player){
@@ -149,21 +149,73 @@ const UICtrl = (function(){
           overUnder = '+' + overUnder;
         }
         for(i=0; i<player.scores.length; i++){
-          boxScore += ` ${player.scores[i]} |`
+          let plusMinusNum;
+          plusMinusNum = player.scores[i] - parsArr[i];
+          let plusMinusName;
+          switch (plusMinusNum) {
+            case -2:
+              plusMinusName = 'ace'
+              break;
+            case -1:
+              plusMinusName = 'birdie'
+              break;
+            case 0:
+              plusMinusName = 'par'
+              break;
+            case 1:
+              plusMinusName = 'bog'
+              break;
+            case 2:
+              plusMinusName = 'doublebog'
+              break;
+            case 3:
+              plusMinusName = 'triplebog'
+              break;
+            case 4:
+              plusMinusName = 'triplebog'
+              break;
+            case 5:
+              plusMinusName = 'triplebog'
+              break;
+            case 6:
+              plusMinusName = 'triplebog'
+              break;
+            case 7:
+              plusMinusName = 'triplebog'
+              break;
+            case 8:
+              plusMinusName = 'triplebog'
+              break;
+            case 9:
+              plusMinusName = 'triplebog'
+              break;
+            case 10:
+              plusMinusName = 'triplebog'
+              break;
+            default:
+          }
+
+          boxScore += `<div class="square ${plusMinusName}">${player.scores[i]}</div>`
         }
 
         html += `<div class="card">
-      <div id="player-${player.id}" class='card-content'>
+      <div id="player-${player.id}" class='card-content player-card-content'>
       <div class="row">
         
-        <div class='card-title'>${player.name} | ${overUnder}<div class='pull-right' >
+        <div class='card-title'>${player.name} ${overUnder}<div class='pull-right' >
           <i class="fas fa-angle-left leftBtn scoreInputGroup"></i>
           <i class="scoreInput scoreInputGroup">3</i>
           <i class="fas fa-angle-right rightBtn scoreInputGroup"></i></div></div>
           <div class='col s12'>
-        <div class="hole-number-div">| ${holes}</div>
-        <div class="par-hole-div">| ${pars}</div>
-        <div>| ${boxScore}</div>
+        <div class='row'>
+          <div class="hole-number-div">${holes}</div>
+        </div>
+        <div class='row'>
+          <div class="par-hole-div">${pars}</div>
+        </div>
+        <div class='row'>
+          <div>${boxScore}</div>
+        </div>
         </div>
         </div>
       </div>
