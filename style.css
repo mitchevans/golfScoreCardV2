@@ -1,6 +1,7 @@
-
-
-
 li {
   font-size: 18px;
+}
+
+.card-title {
+  background-color: blue;
 }

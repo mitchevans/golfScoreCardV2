@@ -8,28 +8,61 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/40caa959fa.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/40caa959fa.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <title>Golf Score Card</title>
 </head>
 
 <body>
   <nav>
-    <div class="nav-wrapper blue">
-      <div class="container">
-        <a href="#" class="brand-logo center course-banner">Golf Score Card</a>
-        <ul class="right">
-          <li><a href="#" class="clear-btn btn blue lighten-3">Clear All</a></li>
-        </ul>
-      </div>
+    <div class="nav-wrapper">
+      <div class="brand-logo right" id="header-title">golfScoreCard</div>
+      <div class="nav-content game-state-data">
+      <ul id="nav-mobile" class="left">
+        <li class='course-banner'></li>
+        <li>  1/22/2020  </li>
+        <li>Hole #3   </li>
+        <li>Par: </li>
+        <li><i class="fas fa-angle-left left-par-btn"></i></li>
+        <li class="par-input-value"> 3 </li>
+        <li><i class="fas fa-angle-right right-par-btn"></i></li>
+      </ul>
+    </div>
     </div>
   </nav>
+ 
 
   <div class="container">
-   <ul id="player-list" class="collection">
-
-    </ul>
     
+    <div id="player-list">
+    <!--<div class="card">
+      <div id="player-0" class='card-content'>
+        <div class='col s12'>
+        <div class='card-title'>Mitch<div class=' pull-right' >
+          <i class="fas fa-angle-left leftBtn"></i>
+          <i class="scoreInput">3</i>
+          <i class="fas fa-angle-right rightBtn"></i></div></div>
+        <div class="hole-number-div"> 1 2 3 4 5</div>
+        <div class="par-hole-div"> 3 3 3 3 3</div>
+        <div>|3|2|4|3|2|</div>
+        </div>
+      </div>
+    </div>
+    <div id="player-list" class="card">
+      <div id="player-0" class='card-content'>
+        <div class='col s12'>
+        <div class='card-title'>Tom<div class=' pull-right' >
+          <i class="fas fa-angle-left leftBtn"></i>
+          <i class="scoreInput">3</i>
+          <i class="fas fa-angle-right rightBtn"></i></div></div>
+        <div> 1 2 3 4 5</div>
+        <div> 3 3 3 3 3</div>
+        <div>|2|2|3|4|2|</div>
+        </div>
+      </div>
+    </div>-->
+  </div>
     <div class="card">
       <div class="card-content">
         <form class="col">
@@ -57,14 +90,16 @@
             <button class="start-game-btn btn blue darken-3"> Start</button>
             <button class="back-course-btn btn grey pull-right"><i class=" fa fa-chevron-circle-left"></i> Back</button>
           </div>
-      
 
-      <div class="game-state">
-        <button class="log-scores-btn btn orange"><i class="fa fa-pencil-square-o"></i>Log Scores</button>
-        <button class="back-game-btn btn grey pull-right"><i class=" fa fa-chevron-circle-left"></i> Back</button>
+
+          <div class="game-state">
+            <button class="log-scores-btn btn orange"><i class="fa fa-pencil-square-o"></i>Log Scores</button>
+           
+            <button class="back-game-btn btn grey pull-right"><i class=" fa fa-chevron-circle-left"></i> Back</button>
+          </div>
       </div>
     </div>
-    </div>
+
 
     </form>
   </div>
