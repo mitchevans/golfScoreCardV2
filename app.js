@@ -56,6 +56,12 @@ const PlayerCtrl = (function(){
       holes.push(holes.length + 1)
       return holes
     },
+    getHoleArr: function(){
+      return data.holes;
+    },
+    getPars: function(){
+      return data.parArr;
+    },
     pushNewPar: function(newPar){
       const parArr = data.parArr;
       parArr.push(newPar);
@@ -78,6 +84,18 @@ const PlayerCtrl = (function(){
         player.overUnder = scoreTotal - parTotal;
       })
       
+    },
+    removeLastHole: function(){
+      let holes = data.holes;
+      holes.pop();
+      console.log("holes: " + holes);
+      let parArr = data.parArr;
+      parArr.pop();
+      console.log('par array: '+ parArr);
+      let players = data.players;
+      players.forEach(function(player){
+        player.scores.pop();
+      })
     }
   }
 })();
@@ -102,6 +120,7 @@ const UICtrl = (function(){
     rightParBtn: '.right-par-btn',
     leftParBtn: '.left-par-btn',
     parInput: '.par-input-value',
+    backGameBtn: '.back-game-btn'
   };
 
   return{
@@ -263,6 +282,9 @@ const App = (function(UICtrl){
     // Change par input value
     document.querySelector(UISelectors.leftParBtn).addEventListener('click', leftParBtnClick);
     document.querySelector(UISelectors.rightParBtn).addEventListener('click', rightParBtnClick);
+
+    // Back button during game
+    document.querySelector(UISelectors.backGameBtn).addEventListener('click', backButtonGameClick);
   }
 
   const addPlayerBtnSubmit = function(e){
@@ -352,6 +374,21 @@ const App = (function(UICtrl){
     UICtrl.increaseParInput();
     
 
+    e.preventDefault();
+  }
+
+  const backButtonGameClick = function(e){
+    PlayerCtrl.removeLastHole();
+    // calculate over unders
+    PlayerCtrl.calculateOverUnder();
+    // Get players
+    const players = PlayerCtrl.getPlayers();
+    // Get new Hole array
+    const holes = PlayerCtrl.getHoleArr();
+    // Get Pars 
+    const parsArr = PlayerCtrl.getPars();
+    
+    UICtrl.populatePlayerList(players, holes, parsArr);
     e.preventDefault();
   }
 
