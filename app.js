@@ -123,7 +123,8 @@ const UICtrl = (function(){
     rightParBtn: '.right-par-btn',
     leftParBtn: '.left-par-btn',
     parInput: '.par-input-value',
-    backGameBtn: '.back-game-btn'
+    backGameBtn: '.back-game-btn',
+    holeNum: '#holeNum'
   };
 
   return{
@@ -133,11 +134,11 @@ const UICtrl = (function(){
       let holes = '';
       let pars = '';
       holesArr.forEach(function(hole){
-        holes +=  `<div class="nonScoreSquare">${hole}</div>`
+        holes +=  `<div class="holeSquare">${hole}</div>`
       });
 
       parsArr.forEach(function(par){
-        pars +=  `<div class="nonScoreSquare">${par}</div>`
+        pars +=  `<div class="parSquare">${par}</div>`
       });
 
       players.forEach(function(player){
@@ -202,7 +203,7 @@ const UICtrl = (function(){
       <div id="player-${player.id}" class='card-content player-card-content'>
       <div class="row">
         
-        <div class='card-title'>${player.name} ${overUnder}<div class='pull-right' >
+        <div class='card-title'>${player.name}<span class='overUnder'>${overUnder}</span><div class='pull-right' >
           <i class="fas fa-angle-left leftBtn scoreInputGroup"></i>
           <i class="scoreInput scoreInputGroup">3</i>
           <i class="fas fa-angle-right rightBtn scoreInputGroup"></i></div></div>
@@ -224,6 +225,14 @@ const UICtrl = (function(){
       // Insert Players into list
       document.querySelector(UISelectors.playerList).innerHTML = html;
     },
+    setCurrentHole: function(holes){
+      if(holes.length > 0){
+      const currentHole = holes[holes.length - 1];
+      document.querySelector(UISelectors.holeNum).innerHTML = currentHole + 1;
+      } else {
+        document.querySelector(UISelectors.holeNum).innerHTML = 1
+      }
+    },
     getPlayerNameInput: function(){
       return {
         name:document.querySelector(UISelectors.playerNameInput).value
@@ -235,7 +244,7 @@ const UICtrl = (function(){
       let boxScore = [];
       const newPlayerDiv = document.createElement('div');
       newPlayerDiv.className = 'card';
-      newPlayerDiv.innerHTML =  `<div id="player-${player.id}" class='card-content'>
+      newPlayerDiv.innerHTML =  `<div id="player-${player.id}" class='card-content player-card-content'>
         <div class='col s12'>
         <div class='card-title'>${player.name} <div class=' pull-right'>
           <i class="fas fa-angle-left leftBtn scoreInputGroup"></i>
@@ -426,6 +435,8 @@ const App = (function(UICtrl){
     PlayerCtrl.pushNewScores(newScoresArr);
     // Get new Hole number
     const holes = PlayerCtrl.getHoles();
+    // increase hole in UI
+    UICtrl.setCurrentHole(holes);
     // Get Par
     const par = UICtrl.getParValue();
     // Push par into pars array
@@ -466,6 +477,8 @@ const App = (function(UICtrl){
     const players = PlayerCtrl.getPlayers();
     // Get new Hole array
     const holes = PlayerCtrl.getHoleArr();
+    // Set current hole in UI
+    UICtrl.setCurrentHole(holes);
     // Get Pars 
     const parsArr = PlayerCtrl.getPars();
     

@@ -1,9 +1,42 @@
 li {
   font-size: 18px;
 }
+body {
+  background-color: #fee;
+}
+.course-banner{
+  background-color: #3fc;
+  color: black;
+  font-weight: bolder;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.overUnder {
+  background-color: #037;
+  color:#fff;
+  font-weight: bolder;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 10px;
+}
+.hole-number {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.par-input-value {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.left-par-btn {
+  padding-left: 10px;
+}
 
 .card-title {
-  background-color: blue;
+  background-color:#03a;
+  margin-bottom: 0 !important;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .square {
@@ -15,14 +48,28 @@ li {
   color: #122;
   text-align: center;
 }
-.nonScoreSquare{
+.holeSquare{
   margin: 2px;
-  
   float: left;
   width: 2rem;
   height: 1rem;
-  color: #122;
+  color: #8fd;
   text-align: center;
+}
+.parSquare{
+  margin: 2px;
+  float: left;
+  width: 2rem;
+  height: 1rem;
+  color: #fff;
+  text-align: center;
+}
+.nav-wrapper {
+  background-color: #49a !important;
+  color: #fff !important;
+}
+.brand-logo {
+  color: #8fd !important;
 }
 
 /* Boxscore Colors */
@@ -39,7 +86,7 @@ li {
   background-color: #f00
 }
 .doublebog {
-  background-color: rgb(139, 3, 3)
+  background-color: #d5e
 }
 .triplebog {
   background-color: #c5d
@@ -49,6 +96,7 @@ li {
   margin-bottom: 0;
 }
 
-.card-content {
+.player-card-content {
+  background-color: #333;
   padding: 0 !important;
 }
