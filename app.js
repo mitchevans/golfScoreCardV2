@@ -321,6 +321,9 @@ const UICtrl = (function(){
     getParValue: function(){
       const parValue = parseInt(document.querySelector(UISelectors.parInput).innerHTML);
       return parValue;
+    },
+    resetParValue: function(){
+      document.querySelector(UISelectors.parInput).innerHTML = 3;
     }
   }
 })();
@@ -441,6 +444,8 @@ const App = (function(UICtrl){
     const par = UICtrl.getParValue();
     // Push par into pars array
     const parsArray = PlayerCtrl.pushNewPar(par);
+    //Reset par value in UI
+    UICtrl.resetParValue();
     // calculate over unders
     PlayerCtrl.calculateOverUnder();
     // Get players

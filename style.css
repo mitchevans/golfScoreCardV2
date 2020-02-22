@@ -47,6 +47,7 @@ body {
   height: 2rem;
   color: #122;
   text-align: center;
+  font-weight: bold;
 }
 .holeSquare{
   margin: 2px;
