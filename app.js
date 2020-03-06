@@ -48,6 +48,18 @@ const StorageCtrl = (function(){
     },
     updateParStorage: function(pars){
       localStorage.setItem('pars', JSON.stringify(pars));
+    },
+    setCourseNameStorage: function(courseName){
+      localStorage.setItem('courseName', JSON.stringify(courseName))
+    },
+    getCourseNameFromStorage: function(){
+      let courseName;
+      if(localStorage.getItem('courseName') === null){
+        courseName = '';
+      } else {
+        courseName = JSON.parse(localStorage.getItem('courseName'));
+      }
+      return courseName;
     }
   }
 })();
@@ -71,7 +83,8 @@ const PlayerCtrl = (function(){
     //],
     players: StorageCtrl.getPlayersFromStorage(),
     parArr: StorageCtrl.getParsFromStorage(),
-    holes: StorageCtrl.getHolesFromStorage()
+    holes: StorageCtrl.getHolesFromStorage(),
+
   }
 
   // Public methods
@@ -451,6 +464,8 @@ const App = (function(PlayerCtrl, StorageCtrl, UICtrl){
   const startBtnClick = function(e){
     UICtrl.showGameState();
     const courseName = UICtrl.getCourseInput();
+    // Set Course Name in LS
+    StorageCtrl.setCourseNameStorage(courseName);
 
     document.querySelector(UISelectors.courseBanner).innerHTML = courseName.course;
     e.preventDefault();
@@ -564,7 +579,7 @@ const App = (function(PlayerCtrl, StorageCtrl, UICtrl){
       const players = PlayerCtrl.getPlayers();
       const holes = PlayerCtrl.getHoleArr();
       const parsArr = PlayerCtrl.getPars();
-
+      const courseName = StorageCtrl.getCourseNameFromStorage();
 
       // Populate list with players
       if(players.length === 0){
@@ -573,6 +588,9 @@ const App = (function(PlayerCtrl, StorageCtrl, UICtrl){
       UICtrl.showGameState();
       UICtrl.setCurrentHole(holes);
       UICtrl.populatePlayerList(players, holes, parsArr);
+      
+
+    document.querySelector(UISelectors.courseBanner).innerHTML = courseName.course;
       }
 
       loadEventListeners();
