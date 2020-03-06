@@ -1,5 +1,56 @@
 // Storage controller
-
+const StorageCtrl = (function(){
+  return {
+    storePlayer: function(player){
+      let players;
+      if(localStorage.getItem('players') === null){
+        players = [];
+        players.push(player);
+        localStorage.setItem('players', JSON.stringify(players));
+      } else{
+        players = JSON.parse(localStorage.getItem('players'));
+        players.push(player);
+        localStorage.setItem('players', JSON.stringify(players));
+      }
+    },
+    getPlayersFromStorage: function(){
+      let players;
+      if(localStorage.getItem('players') === null){
+        players = [];
+      } else {
+        players = JSON.parse(localStorage.getItem('players'));
+      }
+      return players;
+    },
+    updatePlayerStorage: function(updatedPlayers){
+      localStorage.setItem('players', JSON.stringify(updatedPlayers));
+    },
+    updateHoleStorage: function(holes){
+      localStorage.setItem('holes', JSON.stringify(holes));
+    },
+    getHolesFromStorage: function(){
+      let holes;
+      if(localStorage.getItem('holes') === null){
+        holes = [];
+      } else {
+        holes = JSON.parse(localStorage.getItem('holes'));
+      }
+      return holes;
+    },
+    getParsFromStorage: function(){
+      let pars;
+      if(localStorage.getItem('pars') === null){
+        pars = [];
+      } else {
+        pars = JSON.parse(localStorage.getItem('pars'));
+      }
+      return pars
+    },
+    updateParStorage: function(pars){
+      localStorage.setItem('pars', JSON.stringify(pars));
+    }
+  }
+})();
 // Player controller
 const PlayerCtrl = (function(){
 
@@ -13,13 +64,14 @@ const PlayerCtrl = (function(){
 
   // Data Structure
   const data = {
-    players: [
+    //players: [
       //{id: 0, name: 'Mitch', scores: [3, 2, 3]},
       //{id: 1, name: 'Tom', scores: [3, 3, 4]},
       //{id: 2, name: 'Tyler', scores: [3, 3, 3]}
-    ],
-    parArr: [],
-    holes: []
+    //],
+    players: StorageCtrl.getPlayersFromStorage(),
+    parArr: StorageCtrl.getParsFromStorage(),
+    holes: StorageCtrl.getHolesFromStorage()
   }
 
   // Public methods
@@ -329,7 +381,7 @@ const UICtrl = (function(){
 })();
 
 // App controller
-const App = (function(UICtrl){
+const App = (function(PlayerCtrl, StorageCtrl, UICtrl){
 
   const UISelectors = UICtrl.getSelectors();
 
@@ -373,6 +425,8 @@ const App = (function(UICtrl){
       const newPlayer = PlayerCtrl.addPlayer(nameInput.name)
     
       UICtrl.addPlayerToList(newPlayer);
+
+      StorageCtrl.storePlayer(newPlayer);
 
       UICtrl.clearNameInput();
     }
@@ -438,19 +492,24 @@ const App = (function(UICtrl){
     PlayerCtrl.pushNewScores(newScoresArr);
     // Get new Hole number
     const holes = PlayerCtrl.getHoles();
+    //Update holes in LS
+    StorageCtrl.updateHoleStorage(holes);
     // increase hole in UI
     UICtrl.setCurrentHole(holes);
     // Get Par
     const par = UICtrl.getParValue();
     // Push par into pars array
     const parsArray = PlayerCtrl.pushNewPar(par);
+    //Update pars in LS
+    StorageCtrl.updateParStorage(parsArray);
     //Reset par value in UI
     UICtrl.resetParValue();
     // calculate over unders
     PlayerCtrl.calculateOverUnder();
     // Get players
     const players = PlayerCtrl.getPlayers();
-    
+    // Update player LS
+    StorageCtrl.updatePlayerStorage(players);
 
     UICtrl.populatePlayerList(players, holes, parsArray);
 
@@ -482,10 +541,16 @@ const App = (function(UICtrl){
     const players = PlayerCtrl.getPlayers();
     // Get new Hole array
     const holes = PlayerCtrl.getHoleArr();
+    //Update holes in LS
+    StorageCtrl.updateHoleStorage(holes);
     // Set current hole in UI
     UICtrl.setCurrentHole(holes);
     // Get Pars 
     const parsArr = PlayerCtrl.getPars();
+    //Update Pars LS
+    StorageCtrl.updateParStorage(parsArr);
+    // Update Player LS 
+    StorageCtrl.updatePlayerStorage(players);
     
     UICtrl.populatePlayerList(players, holes, parsArr);
     e.preventDefault();
@@ -495,19 +560,24 @@ const App = (function(UICtrl){
     init: function(){
       UICtrl.showPlayerState();
 
-      //Fetch players from data structure
+      //Fetch players, holes and pars from data structure
       const players = PlayerCtrl.getPlayers();
+      const holes = PlayerCtrl.getHoleArr();
+      const parsArr = PlayerCtrl.getPars();
+
 
       // Populate list with players
       if(players.length === 0){
         UICtrl.hidePlayerList();
       }else{
-      UICtrl.populatePlayerList(players);
+      UICtrl.showGameState();
+      UICtrl.setCurrentHole(holes);
+      UICtrl.populatePlayerList(players, holes, parsArr);
       }
 
       loadEventListeners();
     }
   }
-})(UICtrl);
+})(PlayerCtrl, StorageCtrl, UICtrl);
 
 App.init();
